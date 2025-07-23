@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assign Shift Schedule</title>
+    <style>
+        body { font-family: Arial; background-color: #f9f9f9; padding: 30px; }
+        form { background: #fff; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        label { display: block; margin-top: 15px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 20px; padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h2>Assign Shift Schedule</h2>
+    <form th:action="@{/schedule-form}" th:object="${schedule}" method="post">
+        <label>Employee:</label>
+        <select th:field="*{employee}" required>
+            <option value="" disabled selected>Select Employee</option>
+            <option th:each="emp : ${employees}" 
+                    th:value="${emp.id}" 
+                    th:text="${emp.name}">John Doe</option>
+        </select>
+
+        <label>Date:</label>
+        <input type="date" th:field="*{date}" required/>
+
+        <label>Planned Mode:</label>
+        <select th:field="*{plannedMode}" required>
+            <option value="" disabled selected>Select Mode</option>
+            <option value="Remote">Remote</option>
+            <option value="Office">Office</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+
+        <button type="submit">Save Schedule</button>
+    </form>
+</body>
+</html>

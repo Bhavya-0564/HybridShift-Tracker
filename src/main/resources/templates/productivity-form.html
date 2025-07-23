@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Log Productivity</title>
+</head>
+<body>
+    <h2>Log Productivity</h2>
+   <form th:action="@{/productivity/save}" th:object="${log}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Employee:</label>
+    <select th:field="*{employee.id}">
+        <option th:each="e : ${employees}" th:value="${e.id}" th:text="${e.name}"></option>
+    </select><br><br>
+
+    <label>Date:</label>
+    <input type="date" th:field="*{date}" /><br><br>
+
+    <label>Hours Worked:</label>
+    <input type="number" th:field="*{hoursWorked}" step="0.25" /><br><br>
+
+    <label>Task Summary:</label>
+    <textarea th:field="*{taskSummary}"></textarea><br><br>
+
+    <button type="submit">💾 Save</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Shift Schedule</title>
+</head>
+<body>
+<h2>Add Shift Schedule</h2>
+<form th:action="@{/schedules}" th:object="${schedule}" method="post">
+    <label for="employee">Employee:</label>
+    <select name="employeeId" required>
+        <option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.name}"></option>
+    </select><br/>
+
+    <label for="date">Date:</label>
+    <input type="date" th:field="*{date}" required/><br/>
+
+    <label for="plannedMode">Planned Mode:</label>
+    <select th:field="*{plannedMode}" required>
+        <option value="Remote">Remote</option>
+        <option value="On-site">On-site</option>
+        <option value="Hybrid">Hybrid</option>
+    </select><br/>
+
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

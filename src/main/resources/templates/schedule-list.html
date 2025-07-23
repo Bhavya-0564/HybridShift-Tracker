@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Shift Schedules</title>
+    <style>
+        body { font-family: Arial; padding: 30px; background: #f4f4f4; }
+        table { width: 100%; border-collapse: collapse; background-color: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .top-link { margin-bottom: 20px; display: inline-block; }
+        .top-link a { text-decoration: none; background: #4CAF50; color: white; padding: 8px 12px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>All Assigned Shift Schedules</h2>
+    <div class="top-link">
+        <a href="/schedule-form">➕ Assign New Schedule</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Planned Mode</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${schedules}">
+                <td th:text="${s.id}">1</td>
+                <td th:text="${s.employee.name}">John</td>
+                <td th:text="${s.date}">2025-07-20</td>
+                <td th:text="${s.plannedMode}">Remote</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

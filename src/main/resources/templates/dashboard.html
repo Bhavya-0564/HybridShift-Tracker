@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - HybridShift Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f8;
+        }
+
+        .card {
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            color: #0d47a1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold text-primary" href="#">HybridShift Tracker</a>
+        <span class="navbar-text ms-auto">Welcome, <strong th:text="${username}">User</strong></span>
+    </div>
+</nav>
+
+<!-- Dashboard Content -->
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Dashboard</h2>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <a th:href="@{/log-work}" class="text-decoration-none">
+                <div class="card p-4 text-center">
+                    <h5 class="card-title">Work Mode Logging</h5>
+                    <p class="text-muted">Log remote, hybrid, or office shifts.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a th:href="@{/schedule}" class="text-decoration-none">
+                <div class="card p-4 text-center">
+                    <h5 class="card-title">Shift Schedule Management</h5>
+                    <p class="text-muted">Set and view team shift schedules.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a th:href="@{/attendance}" class="text-decoration-none">
+                <div class="card p-4 text-center">
+                    <h5 class="card-title">Attendance Monitoring</h5>
+                    <p class="text-muted">Track attendance and shift logs.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a th:href="@{/productivity}" class="text-decoration-none">
+                <div class="card p-4 text-center">
+                    <h5 class="card-title">Productivity Metrics</h5>
+                    <p class="text-muted">Monitor task completion and performance.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a th:href="@{/calendar}" class="text-decoration-none">
+                <div class="card p-4 text-center">
+                    <h5 class="card-title">Calendar Integration</h5>
+                    <p class="text-muted">Sync logs with your calendar.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a th:href="@{/manager-dashboard}" class="text-decoration-none">
+                <div class="card p-4 text-center">
+                    <h5 class="card-title">Manager Dashboard</h5>
+                    <p class="text-muted">View trends and team performance.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center py-4 mt-5 text-muted border-top bg-white">
+    &copy; 2025 HybridShift Tracker. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

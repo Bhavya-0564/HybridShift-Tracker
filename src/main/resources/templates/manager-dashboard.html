@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manager Dashboard</title>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px 0;
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #999;
+        }
+
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        canvas {
+            margin-top: 30px;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h2>📊 Manager Dashboard</h2>
+    <p>Welcome to the dashboard!</p>
+
+    <a th:href="@{/calendar}">📅 View Shift Calendar</a>
+
+    <!-- Summary -->
+    <h3>Today's Shift Summary</h3>
+    <ul>
+        <li>Total Employees Scheduled: <b th:text="${totalScheduled}">0</b></li>
+        <li>Remote: <b th:text="${remoteCount}">0</b></li>
+        <li>Office: <b th:text="${officeCount}">0</b></li>
+        <li>Hybrid: <b th:text="${hybridCount}">0</b></li>
+    </ul>
+
+    <!-- Inject Thymeleaf values into JS -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const remote = /*[[${remoteCount}]]*/ 0;
+        const office = /*[[${officeCount}]]*/ 0;
+        const hybrid = /*[[${hybridCount}]]*/ 0;
+        /*]]>*/
+    </script>
+
+    <!-- Pie Chart -->
+    <canvas id="workModeChart"></canvas>
+
+    <script>
+        new Chart(document.getElementById("workModeChart"), {
+            type: 'pie',
+            data: {
+                labels: ['Remote', 'Office', 'Hybrid'],
+                datasets: [{
+                    label: 'Work Mode Distribution',
+                    data: [remote, office, hybrid],
+                    backgroundColor: ['#3498db', '#2ecc71', '#f39c12']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: "Today's Work Mode Distribution"
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- Shift Table -->
+    <h3>Today's Shift Schedule</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Planned Mode</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${todaySchedules}">
+                <td th:text="${s.employee.name}">Employee</td>
+                <td th:text="${s.plannedMode}">Mode</td>
+                <td th:text="${s.date}">Date</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Work Logs</title></head>
+<body>
+<h2>All Work Logs</h2>
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Mode</th>
+        <th>Employee</th>
+    </tr>
+    <tr th:each="log : ${logs}">
+        <td th:text="${log.workDate}"></td>
+        <td th:text="${log.mode}"></td>
+        <td th:text="${log.employee.name}"></td>
+    </tr>
+</table>
+</body>
+</html>

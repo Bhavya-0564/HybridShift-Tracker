@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Productivity Logs</title>
+    <style>
+        body { font-family: Arial; padding: 30px; background: #f4f4f4; }
+        table { width: 100%; border-collapse: collapse; background-color: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+        }
+        .edit-btn { background-color: #2196F3; }
+        .delete-btn { background-color: #f44336; }
+    </style>
+</head>
+<body>
+
+<h2>Productivity Logs</h2>
+
+<a href="/productivity/form" style="background-color: green; color: white; padding: 10px; border-radius: 5px; text-decoration: none;">➕ Add New Log</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Hours Worked</th>
+            <th>Task Summary</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="log : ${logs}">
+            <td th:text="${log.id}">1</td>
+            <td th:text="${log.employee.name}">John</td>
+            <td th:text="${log.date}">2025-07-19</td>
+            <td th:text="${log.hoursWorked}">8.0</td>
+            <td th:text="${log.taskSummary}">Worked on backend</td>
+            <td class="actions">
+                <a th:href="@{'/productivity/edit/' + ${log.id}}" class="edit-btn">Edit</a>
+                <a th:href="@{'/productivity/delete/' + ${log.id}}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this log?');">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

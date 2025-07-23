@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Log Work</title></head>
+<body>
+<h2>Log Work Mode</h2>
+<form th:action="@{/log-work}" th:object="${workLog}" method="post">
+    <label>Date: <input type="date" th:field="*{workDate}" required/></label><br/>
+    <label>Mode:
+        <select th:field="*{mode}">
+            <option value="Remote">Remote</option>
+            <option value="Office">Office</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+        </label><br/>
+        <label>Employee:
+        <select th:field="*{employee.id}">
+        <option th:each="emp : ${employees}"
+            th:value="${emp.id}"
+            th:text="${emp.name}">
+        </option>
+        </select>
+
+
+    </label><br/>
+    <button type="submit">Log</button>
+</form>
+</body>
+</html>

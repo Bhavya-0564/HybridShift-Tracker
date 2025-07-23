@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shift Calendar</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+
+    <style>
+        #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            height: 600px;
+        }
+
+        .top-bar {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .top-bar a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <a th:href="@{/schedules/new}">➕ Add New Schedule</a>
+    </div>
+
+    <h2 style="text-align:center;">📅 Shift Calendar</h2>
+
+    <div id="calendar"></div>
+
+    <!-- ✅ Inject Thymeleaf schedule data into JS -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var scheduleData = /*[[${schedules}]]*/ [];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var events = [];
+
+            for (var i = 0; i < scheduleData.length; i++) {
+                var s = scheduleData[i];
+                events.push({
+                    title: s.plannedMode + ' - ' + s.employee.name,
+                    start: s.date
+                });
+            }
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: events
+            });
+
+            calendar.render();
+        });
+
+        /*]]>*/
+    </script>
+</body>
+</html>
