@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "USERS") // ✅ Avoids reserved keyword issue
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

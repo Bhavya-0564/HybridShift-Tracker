@@ -1,104 +1,194 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - HybridShift Tracker</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>HybridShift Tracker - Dashboard</title>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #eaf6ff, #f0f4f8);
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            box-shadow: 0 4px 10px rgba(111, 177, 252, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #3a6073;
+        }
+
+        .welcome {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #3a6073;
+            font-weight: 500;
+        }
+
+        .welcome i {
+            font-size: 20px;
+            margin-right: 8px;
+            color: #3a6073;
+        }
+
+        .dashboard-title {
+            text-align: center;
+            font-size: 42px;
+            margin: 50px 0 30px;
+            background: linear-gradient(to right, #0c0d0d, #6fb1fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 0 40px 60px;
+            max-width: 1200px;
+            margin: auto;
         }
 
         .card {
-            transition: 0.3s ease;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(111, 177, 252, 0.15);
+            padding: 30px 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 36px rgba(111, 177, 252, 0.25);
         }
 
-        .card-title {
-            color: #0d47a1;
+        .card i {
+            font-size: 30px;
+            color: #6fb1fc;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #3a6073;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 15px;
+            color: #3a6073;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #3a6073;
+            font-size: 14px;
+            background: #ffffff;
+            box-shadow: 0 -2px 10px rgba(111, 177, 252, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-title {
+                font-size: 30px;
+                margin-top: 30px;
+            }
+
+            .dashboard-grid {
+                padding: 0 20px 40px;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-primary" href="#">HybridShift Tracker</a>
-        <span class="navbar-text ms-auto">Welcome, <strong th:text="${username}">User</strong></span>
+<header>
+    <div class="logo">🌐 HybridShift Tracker</div>
+    <div class="welcome"><i class="fas fa-user-circle"></i> Welcome, User</div>
+</header>
+
+<h1 class="dashboard-title">Dashboard</h1>
+
+<div class="dashboard-grid">
+
+    <div class="card">
+        <a th:href="@{/log-work}">
+            <i class="fas fa-laptop-house"></i>
+            <h3>Work Mode Logging</h3>
+            <p>Log remote, hybrid, or office shifts.</p>
+        </a>
     </div>
-</nav>
 
-<!-- Dashboard Content -->
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">Dashboard</h2>
-
-    <div class="row g-4">
-        <div class="col-md-4">
-            <a th:href="@{/log-work}" class="text-decoration-none">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title">Work Mode Logging</h5>
-                    <p class="text-muted">Log remote, hybrid, or office shifts.</p>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a th:href="@{/schedule}" class="text-decoration-none">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title">Shift Schedule Management</h5>
-                    <p class="text-muted">Set and view team shift schedules.</p>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a th:href="@{/attendance}" class="text-decoration-none">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title">Attendance Monitoring</h5>
-                    <p class="text-muted">Track attendance and shift logs.</p>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a th:href="@{/productivity}" class="text-decoration-none">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title">Productivity Metrics</h5>
-                    <p class="text-muted">Monitor task completion and performance.</p>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a th:href="@{/calendar}" class="text-decoration-none">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title">Calendar Integration</h5>
-                    <p class="text-muted">Sync logs with your calendar.</p>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a th:href="@{/manager-dashboard}" class="text-decoration-none">
-                <div class="card p-4 text-center">
-                    <h5 class="card-title">Manager Dashboard</h5>
-                    <p class="text-muted">View trends and team performance.</p>
-                </div>
-            </a>
-        </div>
+    <div class="card">
+        <a th:href="@{/schedules/new}">
+            <i class="fas fa-calendar-alt"></i>
+            <h3>Shift Schedule Management</h3>
+            <p>Set and view team shift schedules.</p>
+        </a>
     </div>
+
+    <div class="card">
+        <a th:href="@{/attendance}">
+            <i class="fas fa-user-check"></i>
+            <h3>Attendance Monitoring</h3>
+            <p>Track attendance and shift logs.</p>
+        </a>
+    </div>
+
+    <div class="card">
+        <a th:href="@{/productivity/form}">
+            <i class="fas fa-chart-line"></i>
+            <h3>Productivity Metrics</h3>
+            <p>Monitor task completion and performance.</p>
+        </a>
+    </div>
+
+    <div class="card">
+        <a th:href="@{/calendar}">
+            <i class="fas fa-calendar-check"></i>
+            <h3>Calendar Integration</h3>
+            <p>Sync logs with your calendar.</p>
+        </a>
+    </div>
+
+    <div class="card">
+        <a th:href="@{/manager-dashboard}">
+            <i class="fas fa-users-cog"></i>
+            <h3>Manager Dashboard</h3>
+            <p>View trends and team performance.</p>
+        </a>
+    </div>
+
 </div>
 
-<!-- Footer -->
-<footer class="text-center py-4 mt-5 text-muted border-top bg-white">
+<footer>
     &copy; 2025 HybridShift Tracker. All rights reserved.
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

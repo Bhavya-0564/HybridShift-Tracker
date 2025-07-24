@@ -17,13 +17,7 @@ public class CalendarController {
     @GetMapping("/calendar")
     public String showCalendar(Model model) {
         List<ShiftSchedule> schedules = scheduleService.getAllSchedules();
-
-        // Debug print (optional)
-        for (ShiftSchedule s : schedules) {
-            System.out.println("Shift: " + s.getPlannedMode() + ", Date: " + s.getDate());
-        }
-
         model.addAttribute("schedules", schedules);
-        return "calendar"; // Must match the file name in templates
+        return "calendar";
     }
 }

@@ -1,27 +1,152 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Shift Schedule</title>
+    <meta charset="UTF-8">
+    <title>Add Shift Schedule - HybridShift Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb); /* Soft Sky Blue gradient */
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3a6073; /* Cool Gray */
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: #3a6073;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .home-link:hover {
+            color: #3a89d6;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(111, 177, 252, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #2b3d52;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #3a6073;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: #f9f9f9;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #3a89d6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2d73b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #3a6073;
+            font-size: 14px;
+            background: #ffffff;
+            margin-top: 60px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        @media screen and (max-width: 768px) {
+            .form-container {
+                margin: 30px 20px;
+                padding: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h2>Add Shift Schedule</h2>
-<form th:action="@{/schedules}" th:object="${schedule}" method="post">
-    <label for="employee">Employee:</label>
-    <select name="employeeId" required>
-        <option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.name}"></option>
-    </select><br/>
 
-    <label for="date">Date:</label>
-    <input type="date" th:field="*{date}" required/><br/>
+<header>
+    <div class="logo">🌐 HybridShift Tracker</div>
+    <a class="home-link" th:href="@{/dashboard}">
+        <i class="fas fa-home"></i> Back to Dashboard
+    </a>
+</header>
 
-    <label for="plannedMode">Planned Mode:</label>
-    <select th:field="*{plannedMode}" required>
-        <option value="Remote">Remote</option>
-        <option value="On-site">On-site</option>
-        <option value="Hybrid">Hybrid</option>
-    </select><br/>
+<div class="form-container">
+    <h2>Add Shift Schedule</h2>
+    <form th:action="@{/schedules}" th:object="${schedule}" method="post">
+        <label for="employee">Employee:</label>
+        <select name="employeeId" required>
+            <option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.name}">Employee</option>
+        </select>
 
-    <button type="submit">Save</button>
-</form>
+        <label for="date">Date:</label>
+        <input type="date" th:field="*{date}" required />
+
+        <label for="plannedMode">Planned Mode:</label>
+        <select th:field="*{plannedMode}" required>
+            <option value="Remote">Remote</option>
+            <option value="On-site">On-site</option>
+            <option value="Hybrid">Hybrid</option>
+        </select>
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+
+<footer>
+    &copy; 2025 HybridShift Tracker. All rights reserved.
+</footer>
+
 </body>
 </html>
