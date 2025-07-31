@@ -1,0 +1,21 @@
+@Controller
+@RequestMapping("/manager")
+public class ManagerDashboardController {
+
+    @Autowired
+    private AttendanceService attendanceService;
+
+    @GetMapping("/attendance")
+    public String showAttendanceFilter() {
+        return "attendance-filter";
+    }
+
+    @GetMapping("/attendance/view")
+    public String showAttendanceTable(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                      Model model) {
+        List<Attendance> attendanceList = attendanceService.getByDate(date);
+        model.addAttribute("attendanceList", attendanceList);
+        model.addAttribute("selectedDate", date);
+        return "attendance-table";
+    }
+}

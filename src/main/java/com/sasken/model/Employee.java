@@ -35,5 +35,10 @@ public class Employee {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public Employee orElseThrow(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
+    }
 }
 

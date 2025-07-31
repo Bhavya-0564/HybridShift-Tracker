@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Attendance for Selected Date</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 30px;
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb);
+        }
+        h2 {
+            color: #2b3d52;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(111, 177, 252, 0.15);
+            overflow: hidden;
+        }
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        th {
+            background-color: #3a89d6;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f6fb;
+        }
+        a {
+            background: linear-gradient(to right, #6fb1fc, #b6c6d8);
+            color: white;
+            padding: 10px 18px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        a:hover {
+            background: linear-gradient(to right, #5fa1f0, #a5bfcf);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Attendance on <span th:text="${date}">Selected Date</span></h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Actual Mode</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="a : ${attendanceList}">
+                <td th:text="${a.employee.id}">ID</td>
+                <td th:text="${a.employee.name}">Name</td>
+                <td th:text="${a.actualMode}">Mode</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/manager/dashboard}">⬅ Back to Dashboard</a>
+
+</body>
+</html>

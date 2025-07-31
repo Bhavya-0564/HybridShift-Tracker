@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Filter Attendance - HybridShift Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb);
+        }
+
+        .filter-box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="date"],
+        button {
+            margin-top: 10px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            background-color: #3a89d6;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2b6fb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="filter-box">
+        <h2>📅 Filter Attendance by Date</h2>
+        <form th:action="@{/manager/attendance/view}" method="get">
+            <label>Select a Date:</label>
+            <input type="date" name="date" required />
+            <button type="submit">View Attendance</button>
+        </form>
+    </div>
+</body>
+</html>

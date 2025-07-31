@@ -1,39 +1,116 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Attendance Records</title>
+    <title>Attendance Records - HybridShift Tracker</title>
     <style>
-        body { font-family: Arial; padding: 30px; background: #f4f4f4; }
-        table { width: 100%; border-collapse: collapse; background-color: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #4CAF50; color: white; }
-        tr:hover { background-color: #f1f1f1; }
-        .top-link { margin-bottom: 20px; display: inline-block; }
-        .top-link a { text-decoration: none; background: #4CAF50; color: white; padding: 8px 12px; border-radius: 5px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px;
+            margin: 0;
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb); /* Soft Sky Blue + Cool Gray */
+        }
+
+        h2 {
+            color: #2b3d52;
+            margin-bottom: 20px;
+        }
+
+        .top-link {
+            margin-bottom: 20px;
+        }
+
+        .top-link a {
+            background: linear-gradient(to right, #6fb1fc, #b6c6d8);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s;
+            display: inline-block;
+        }
+
+        .top-link a:hover {
+            background: linear-gradient(to right, #5fa1f0, #a5bfcf);
+            transform: scale(1.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(111, 177, 252, 0.15);
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        th {
+            background-color: #3a89d6;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f6fb;
+        }
+
+        @media screen and (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                position: sticky;
+                top: 0;
+            }
+
+            td {
+                padding-left: 50%;
+                position: relative;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 16px;
+                font-weight: bold;
+                color: #3a6073;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2>All Attendance Records</h2>
-    <div class="top-link">
-        <a href="/attendance-form">➕ Mark Attendance</a>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Employee</th>
-                <th>Date</th>
-                <th>Actual Mode</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="a : ${records}">
-                <td th:text="${a.id}">1</td>
-                <td th:text="${a.employee.name}">John</td>
-                <td th:text="${a.date}">2025-07-18</td>
-                <td th:text="${a.actualMode}">Office</td>
-            </tr>
-        </tbody>
-    </table>
+
+<h2>📅 All Attendance Records</h2>
+
+<div class="top-link">
+    <a href="/attendance-form">➕ Mark Attendance</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Actual Mode</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="a : ${records}">
+            <td th:text="${a.id}">1</td>
+            <td th:text="${a.employee.name}">John</td>
+            <td th:text="${a.date}">2025-07-18</td>
+            <td th:text="${a.actualMode}">Office</td>
+        </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

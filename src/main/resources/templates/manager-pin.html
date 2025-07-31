@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manager Terminal Access</title>
+
+    <!-- Font Awesome for shield icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e0f2fe, #f0f8ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .terminal-container {
+            background: #ffffff;
+            padding: 45px 35px;
+            border-radius: 20px;
+            box-shadow: 0 12px 18px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+            position: relative;
+        }
+
+        .icon-top {
+            font-size: 48px;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 22px;
+        }
+
+        .pin-box {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pin-box input {
+            width: 44px;
+            height: 54px;
+            text-align: center;
+            font-size: 24px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        .pin-box input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 6px #007bff50;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: #e74c3c;
+            margin-top: 14px;
+            font-size: 14px;
+        }
+
+        .shake {
+            animation: shake 0.3s;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            50% { transform: translateX(4px); }
+            75% { transform: translateX(-4px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+
+    <script>
+        function moveFocus(current, nextFieldID) {
+            if (current.value.length === 1 && nextFieldID) {
+                document.getElementById(nextFieldID).focus();
+            }
+        }
+
+        window.onload = function () {
+            document.querySelector('input[name="pin1"]').focus();
+        };
+    </script>
+</head>
+<body>
+    <div class="terminal-container" th:classappend="${param.error} ? ' shake'">
+        <div class="icon-top"><i class="fas fa-shield-alt"></i></div>
+        <h2>Manager Terminal Access</h2>
+
+        <form th:action="@{/manager-pin}" method="post">
+            <div class="pin-box">
+                <input type="password" maxlength="1" name="pin1" id="pin1" oninput="moveFocus(this, 'pin2')" required />
+                <input type="password" maxlength="1" name="pin2" id="pin2" oninput="moveFocus(this, 'pin3')" required />
+                <input type="password" maxlength="1" name="pin3" id="pin3" oninput="moveFocus(this, 'pin4')" required />
+                <input type="password" maxlength="1" name="pin4" id="pin4" required />
+            </div>
+            <button type="submit">Access Dashboard</button>
+        </form>
+
+        <p class="error" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+    </div>
+</body>
+</html>
+
+    

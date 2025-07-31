@@ -2,6 +2,9 @@ package com.sasken.controller;
 
 import com.sasken.model.User;
 import com.sasken.repository.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,7 +18,7 @@ public class AuthController {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // ✅ Add this
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String loginPage() {
@@ -30,9 +33,20 @@ public class AuthController {
 
     @PostMapping("/signup")
     public String processSignup(@ModelAttribute("user") User user) {
-        // ✅ Encrypt password before saving
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "redirect:/login";
+    }
+
+    // ❌ Removed: @GetMapping("/manager-pin") to avoid conflict
+
+    @PostMapping("/validate-manager-pin")
+    public String validatePin(@RequestParam String pin, HttpSession session) {
+        if ("123456".equals(pin)) {
+            session.setAttribute("isManager", true);
+            return "redirect:/manager/dashboard";
+        } else {
+            return "redirect:/manager-pin?error=true";
+        }
     }
 }

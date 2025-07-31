@@ -1,23 +1,103 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Employee</title>
+    <title>Add Employee - HybridShift Tracker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb); /* Soft Sky Blue + Cool Gray */
+        }
+
+        h2 {
+            color: #2b3d52;
+            margin-bottom: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            background: linear-gradient(to right, #6fb1fc, #b6c6d8);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        a:hover {
+            background: linear-gradient(to right, #5fa1f0, #a5bfcf);
+            transform: scale(1.02);
+        }
+
+        form {
+            max-width: 500px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(111, 177, 252, 0.15);
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            color: #2b3d52;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #c7d8e5;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #6fb1fc;
+            box-shadow: 0 0 5px rgba(111, 177, 252, 0.3);
+        }
+
+        input[type="submit"] {
+            margin-top: 20px;
+            background: linear-gradient(to right, #6fb1fc, #b6c6d8);
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(to right, #5fa1f0, #a5bfcf);
+            transform: scale(1.02);
+        }
+    </style>
 </head>
 <body>
-    <h2>Add New Employee</h2>
-    <a href="/employee-list">View All Employees</a>
 
-    <form action="/employees" method="post">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br>
+    <h2>👤 Add New Employee</h2>
+    <a th:href="@{/employee-list}">📋 View All Employees</a>
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
+    <form th:action="@{/employees}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
 
-        <label for="department">Department:</label><br>
-        <input type="text" id="department" name="department" required><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="department">Department:</label>
+        <input type="text" id="department" name="department" required>
 
         <input type="submit" value="Add Employee">
     </form>
+
 </body>
 </html>

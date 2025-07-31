@@ -1,158 +1,214 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Log Work Mode - HybridShift Tracker</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <title>Smart Log - HybridShift Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e0f7ff, #f1f6fb);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-        body {
-            margin: 0;
-            background: linear-gradient(to right, #eaf6ff, #f1f6fb);
-        }
+    header {
+      background-color: #ffffff;
+      padding: 20px 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        header {
-            background-color: #ffffff;
-            padding: 20px 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #3a6073;
+    }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #3a6073;
-        }
+    .home-link {
+      text-decoration: none;
+      color: #3a6073;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        .home-link {
-            text-decoration: none;
-            color: #3a6073;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s;
-        }
+    .smart-log {
+      width: 100%;
+      max-width: 650px;
+      margin: 50px auto;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
 
-        .home-link:hover {
-            color: #3a89d6;
-        }
+    .assistant-line {
+      font-size: 17px;
+      color: #3a6073;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
 
-        .form-container {
-            max-width: 600px;
-            margin: 60px auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 12px 35px rgba(111, 177, 252, 0.2);
-        }
+    .assistant-line i {
+      color: #4a90e2;
+    }
 
-        h2 {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 30px;
-            color: #2b3d52;
-        }
+    .mode-options {
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: #3a6073;
-        }
+    .mode-options input[type="radio"] {
+      display: none;
+    }
 
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 8px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-            background-color: #f9f9f9;
-        }
+    .mode-options label {
+      flex: 1;
+      text-align: center;
+      background: #eef6ff;
+      padding: 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 500;
+      font-size: 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      color: #3a6073;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            background-color: #3a89d6;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
-        }
+    .mode-options input[type="radio"]:checked + label {
+      background: linear-gradient(to right, #6fb1fc, #b6c6d8);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
 
-        button:hover {
-            background-color: #2d73b8;
-        }
+    .mode-options .emoji {
+      font-size: 22px;
+      margin-bottom: 6px;
+      display: block;
+    }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #3a6073;
-            font-size: 14px;
-            background: #ffffff;
-            margin-top: 60px;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.03);
-        }
+    input[type="date"], select {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+      margin-bottom: 25px;
+    }
 
-        @media screen and (max-width: 768px) {
-            .form-container {
-                margin: 30px 20px;
-                padding: 30px;
-            }
-        }
-    </style>
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(to right, #6fb1fc, #b6c6d8);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #5fa1f0, #a5bfcf);
+      transform: scale(1.02);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #3a6073;
+      background: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .smart-log {
+        padding: 25px 20px;
+        margin: 30px 15px;
+      }
+
+      .mode-options {
+        flex-direction: column;
+      }
+
+      .mode-options label {
+        min-height: 70px;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">🌐 HybridShift Tracker</div>
-    <a class="home-link" th:href="@{/dashboard}">
-    <i class="fas fa-home"></i> Back to Dashboard
-</a>
-
+  <div class="logo">🌐 HybridShift Tracker</div>
+  <a class="home-link" th:href="@{/dashboard}">
+    <i class="fas fa-home"></i>Back to Dashboard
+  </a>
 </header>
 
-<div class="form-container">
-    <h2>Log Work Mode</h2>
-    <form th:action="@{/log-work}" th:object="${workLog}" method="post">
-        <label>
-            Date:
-            <input type="date" th:field="*{workDate}" required />
-        </label>
-        <label>
-            Mode:
-            <select th:field="*{mode}">
-                <option value="Remote">Remote</option>
-                <option value="Office">Office</option>
-                <option value="Hybrid">Hybrid</option>
-            </select>
-        </label>
-        <label>
-            Employee:
-            <select th:field="*{employee.id}">
-                <option th:each="emp : ${employees}"
-                        th:value="${emp.id}"
-                        th:text="${emp.name}">
-                </option>
-            </select>
-        </label>
-        <button type="submit">Submit Work Log</button>
-    </form>
+<div class="smart-log">
+  <form th:action="@{/log-work}" th:object="${workLog}" method="post">
+
+    <div class="assistant-line">
+      <i class="fas fa-comment-dots"></i> How are you working today?
+    </div>
+
+    <div class="mode-options">
+      <input type="radio" id="remote" name="mode" value="Remote" th:field="*{mode}" />
+      <label for="remote">
+        <span class="emoji">🏠</span>
+        Remote
+      </label>
+
+      <input type="radio" id="office" name="mode" value="Office" th:field="*{mode}" />
+      <label for="office">
+        <span class="emoji">🏢</span>
+        Office
+      </label>
+
+      <input type="radio" id="hybrid" name="mode" value="Hybrid" th:field="*{mode}" />
+      <label for="hybrid">
+        <span class="emoji">💻</span>
+        Hybrid
+      </label>
+    </div>
+
+    <div class="assistant-line">
+      <i class="fas fa-calendar-alt"></i> What’s the date?
+    </div>
+    <input type="date" th:field="*{workDate}" required />
+
+    <div class="assistant-line">
+      <i class="fas fa-user-tag"></i> Who’s logging in?
+    </div>
+    <select th:field="*{employee.id}">
+      <option th:each="emp : ${employees}"
+              th:value="${emp.id}"
+              th:text="${emp.name}">
+      </option>
+    </select>
+
+    <button type="submit"><i class="fas fa-check-circle"></i> Log In</button>
+  </form>
 </div>
 
 <footer>
-    &copy; 2025 HybridShift Tracker. All rights reserved.
+  &copy; 2025 HybridShift Tracker. All rights reserved.
 </footer>
 
 </body>
