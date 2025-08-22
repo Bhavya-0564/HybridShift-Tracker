@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -24,4 +25,9 @@ public class ShiftSchedule {
 
     @Column(name = "planned_mode", nullable = false)
     private String plannedMode; // Remote / On-site / Hybrid
+
+    @Column(name = "scheduled_login_time")
+private LocalTime scheduledLoginTime;
+
+
 }

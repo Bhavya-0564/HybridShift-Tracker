@@ -3,6 +3,7 @@
 <head>
     <title>Shift Calendar - HybridShift Tracker</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
 
@@ -11,33 +12,32 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(to right, #eaf6ff, #f1f6fb); /* Soft Sky Blue + Cool Gray */
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb);
+            position: relative;
+        }
+
+        .back-to-dashboard {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            text-decoration: none;
+            color: #2b3d52;
+            font-weight: bold;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-to-dashboard:hover {
+            color: #000;
+            text-decoration: underline;
         }
 
         h2 {
             text-align: center;
             color: #2b3d52;
             margin-bottom: 30px;
-        }
-
-        .top-bar {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .top-bar a {
-            background: linear-gradient(to right, #6fb1fc, #b6c6d8);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s;
-        }
-
-        .top-bar a:hover {
-            background: linear-gradient(to right, #5fa1f0, #a5bfcf);
-            transform: scale(1.02);
         }
 
         #calendar {
@@ -49,7 +49,6 @@
             box-shadow: 0 10px 25px rgba(111, 177, 252, 0.15);
         }
 
-        /* Customize FullCalendar header and cells */
         .fc-toolbar-title {
             color: #3a6073;
             font-size: 22px;
@@ -67,15 +66,15 @@
 </head>
 <body>
 
-    <div class="top-bar">
-        <a th:href="@{/schedules/new}">➕ Add New Schedule</a>
-    </div>
+    <!-- Back to Dashboard Button -->
+    <a th:href="@{/dashboard}" class="back-to-dashboard">
+        <i class="fas fa-home"></i> Back to Dashboard
+    </a>
 
     <h2>📅 Shift Calendar</h2>
 
     <div id="calendar"></div>
 
-    <!-- ✅ Inject Thymeleaf schedule data into JS -->
     <script th:inline="javascript">
         /*<![CDATA[*/
         var scheduleData = /*[[${schedules}]]*/ [];

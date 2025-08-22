@@ -22,10 +22,10 @@ public class EmployeeUIController {
         return "employee-form";
     }
 
-    // Add new employee
-    @PostMapping("/employee/save")
-    public String addEmployee(@ModelAttribute Employee employee) {
-        employeeService.addEmployee(employee);
+    // Save or update employee (handles both Add & Edit)
+    @PostMapping("/employees")
+    public String saveOrUpdateEmployee(@ModelAttribute Employee employee) {
+        employeeService.saveEmployee(employee); // Works for both new and existing
         return "redirect:/employee-list";
     }
 
@@ -52,16 +52,4 @@ public class EmployeeUIController {
         model.addAttribute("employee", employee);
         return "employee-form";
     }
-
-    // Update an existing employee
-    @PostMapping("/employee/update")
-    public String updateEmployee(@ModelAttribute Employee employee) {
-        employeeService.saveEmployee(employee); // assumes update based on ID
-        return "redirect:/employee-list";
-    }
-    @GetMapping("/employees")
-public String redirectToEmployeeList() {
-    return "redirect:/employee-list";
-}
-
 }

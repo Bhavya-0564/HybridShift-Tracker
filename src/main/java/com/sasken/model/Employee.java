@@ -22,6 +22,15 @@ public class Employee {
         this.department = department;
         this.email = email;
     }
+    private String phoneNumber;
+
+public String getPhoneNumber() {
+    return phoneNumber;
+}
+
+public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+}
 
     // Getters and Setters
     public Long getId() { return id; }

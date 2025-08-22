@@ -1,155 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Productivity Logs - HybridShift Tracker</title>
+    <title>Productivity Logs</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 30px;
-            margin: 0;
-            background: linear-gradient(to right, #eaf6ff, #f1f6fb); /* Soft Sky Blue + Cool Gray */
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            padding: 20px;
         }
-
         h2 {
-            color: #2b3d52;
-            margin-bottom: 20px;
+            text-align: center;
+            color: #2c3e50;
         }
-
-        a.add-log-btn {
-            background: linear-gradient(to right, #6fb1fc, #b6c6d8);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            transition: background 0.3s ease, transform 0.2s;
-        }
-
-        a.add-log-btn:hover {
-            background: linear-gradient(to right, #5fa1f0, #a5bfcf);
-            transform: scale(1.02);
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 25px;
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(111, 177, 252, 0.15);
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-
         th, td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #e0e0e0;
-            text-align: left;
-            font-size: 15px;
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
         }
-
         th {
-            background-color: #3a89d6;
-            color: white;
+            background-color: #cfe2ff;
+            color: #1d3557;
         }
-
-        tr:hover {
-            background-color: #f1f6fb;
-        }
-
-        .actions a {
-            margin-right: 10px;
-            text-decoration: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 14px;
+        .late {
+            color: red;
             font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s;
         }
-
-        .edit-btn {
-            background: linear-gradient(to right, #6fb1fc, #b6c6d8);
-            color: white;
-        }
-
-        .edit-btn:hover {
-            background: linear-gradient(to right, #5fa1f0, #a5bfcf);
-            transform: scale(1.02);
-        }
-
-        .delete-btn {
-            background: linear-gradient(to right, #f05454, #f28f8f);
-            color: white;
-        }
-
-        .delete-btn:hover {
-            background: linear-gradient(to right, #d94343, #e27676);
-            transform: scale(1.02);
-        }
-
-        @media screen and (max-width: 768px) {
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            th {
-                position: sticky;
-                top: 0;
-            }
-
-            td {
-                padding-left: 50%;
-                position: relative;
-            }
-
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 16px;
-                font-weight: bold;
-                color: #3a6073;
-            }
-
-            .actions {
-                display: flex;
-                gap: 10px;
-                justify-content: flex-start;
-                margin-top: 10px;
-            }
+        .on-time {
+            color: green;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
+    <h2>Productivity Log List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Scheduled Login</th>
+                <th>Actual Login</th>
+                <th>Task Summary</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="log : ${logs}">
+                <td th:text="${log.employee.name}"></td>
+                <td th:text="${#temporals.format(log.date, 'dd-MM-yyyy')}"></td>
 
-<h2>📊 Productivity Logs</h2>
+                <td th:text="${#dates.format(log.scheduledLoginAsDate, 'HH:mm')}"></td>
 
-<a href="/productivity/form" class="add-log-btn">➕ Add New Log</a>
-
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Employee</th>
-            <th>Date</th>
-            <th>Hours Worked</th>
-            <th>Task Summary</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="log : ${logs}">
-            <td th:text="${log.id}">1</td>
-            <td th:text="${log.employee.name}">John</td>
-            <td th:text="${log.date}">2025-07-19</td>
-            <td th:text="${log.hoursWorked}">8.0</td>
-            <td th:text="${log.taskSummary}">Worked on backend</td>
-            <td class="actions">
-                <a th:href="@{'/productivity/edit/' + ${log.id}}" class="edit-btn">Edit</a>
-                <a th:href="@{'/productivity/delete/' + ${log.id}}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this log?');">Delete</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
+                <td th:text="${#dates.format(log.actualLoginAsDate, 'HH:mm')}"></td>
+                 <td th:text="${log.taskSummary}"></td> <!-- ✅ Show task summary -->
+                <td th:classappend="${log.lateLogin} ? 'late' : 'on-time'"
+                    th:text="${log.lateLogin} ? 'Late' : 'On Time'"></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

@@ -1,8 +1,17 @@
 package com.sasken.controller;
 
+import com.sasken.model.Employee;
+import com.sasken.model.ProductivityLog;
+import com.sasken.model.ShiftSchedule;
 import com.sasken.model.WorkLog;
 import com.sasken.service.EmployeeService;
+import com.sasken.service.ProductivityLogService;
+import com.sasken.service.ShiftScheduleService;
 import com.sasken.service.WorkLogService;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +27,12 @@ public class WorkLogController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private ShiftScheduleService shiftScheduleService;
+
+    @Autowired
+    private ProductivityLogService productivityLogService;
+
     @GetMapping("/log-work")
     public String showWorkLogForm(Model model) {
         model.addAttribute("workLog", new WorkLog());
@@ -27,8 +42,39 @@ public class WorkLogController {
 
     @PostMapping("/log-work")
     public String logWork(@ModelAttribute WorkLog workLog) {
-        // ❌ No need to manually set employee
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        workLog.setWorkDate(today);
+
+        workLog.setLoginTime(now);
         workLogService.save(workLog);
+
+        // Automatically create/update productivity log
+        Employee emp = workLog.getEmployee();
+       ShiftSchedule schedule = shiftScheduleService.getScheduleByEmployeeAndDate(emp, today);
+
+
+        if (schedule != null) {
+            LocalDateTime scheduledLoginTime = LocalDateTime.of(today, schedule.getScheduledLoginTime());
+
+            LocalDateTime actualLoginTime = LocalDateTime.of(today, now);
+
+            boolean isLate = actualLoginTime.isAfter(scheduledLoginTime);
+
+            ProductivityLog log = productivityLogService.findByEmployeeAndDate(emp, today);
+            if (log == null) {
+                log = new ProductivityLog();
+                log.setEmployee(emp);
+                log.setDate(today);
+            }
+
+            log.setScheduledLoginTime(scheduledLoginTime);
+            log.setActualLoginTime(actualLoginTime);
+            log.setLateLogin(isLate);
+
+            productivityLogService.save(log);
+        }
+
         return "redirect:/log-work";
     }
 

@@ -1,10 +1,9 @@
 package com.sasken.controller;
 
 import com.sasken.model.User;
-import com.sasken.repository.UserRepository;
+import com.sasken.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -32,13 +31,19 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public String processSignup(@ModelAttribute("user") User user) {
+    public String processSignup(@ModelAttribute("user") User user, Model model) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        
+        // Removed user.setRole("employee");
+
+        boolean success = userService.registerUser(user);
+        if (!success) {
+            model.addAttribute("error", "Username already exists. Please choose another.");
+            return "signup";
+        }
+
         return "redirect:/login";
     }
-
-    // ❌ Removed: @GetMapping("/manager-pin") to avoid conflict
 
     @PostMapping("/validate-manager-pin")
     public String validatePin(@RequestParam String pin, HttpSession session) {

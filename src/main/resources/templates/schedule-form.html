@@ -124,28 +124,42 @@
 
 <div class="form-container">
     <h2>Assign Shift Schedule</h2>
-    <form th:action="@{/schedule-form}" th:object="${schedule}" method="post">
+
+    <form th:action="@{/schedules}" th:object="${schedule}" method="post">
+
+        <!-- ✅ Employee Dropdown (fixed binding) -->
         <label>
             Employee:
             <select th:field="*{employee}" required>
                 <option value="" disabled selected>Select Employee</option>
-                <option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.name}">Employee</option>
+                <option th:each="emp : ${employees}" 
+                        th:value="${emp}" 
+                        th:text="${emp.name}">
+                </option>
             </select>
         </label>
 
+        <!-- Date -->
         <label>
             Date:
             <input type="date" th:field="*{date}" required />
         </label>
 
+        <!-- Planned Mode -->
         <label>
             Planned Mode:
             <select th:field="*{plannedMode}" required>
                 <option value="" disabled selected>Select Mode</option>
                 <option value="Remote">Remote</option>
-                <option value="Office">Office</option>
+                <option value="On-site">On-site</option>
                 <option value="Hybrid">Hybrid</option>
             </select>
+        </label>
+
+        <!-- ✅ Scheduled Login Time -->
+        <label>
+            Scheduled Login Time:
+            <input type="time" th:field="*{scheduledLoginTime}" required />
         </label>
 
         <button type="submit">Save Schedule</button>

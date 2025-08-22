@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Employee Directory - HybridShift Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 30px;
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb);
+        }
+
+        /* Back to Dashboard link (top right) */
+        .top-right-link {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            color: #3a6073;
+        }
+
+        .top-right-link i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .top-right-link:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: #2b3d52;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(111, 177, 252, 0.15);
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        th {
+            background-color: #3a89d6;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f6fb;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Back to Dashboard link -->
+<a th:href="@{/dashboard}" class="top-right-link">
+    <i class="fas fa-home"></i> Back to Dashboard
+</a>
+
+<h2>👥 Employee Directory</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="emp : ${employees}">
+            <td th:text="${emp.id}">1</td>
+            <td th:text="${emp.name}">John Doe</td>
+            <td th:text="${emp.email}">john@example.com</td>
+            <td th:text="${emp.department}">HR</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

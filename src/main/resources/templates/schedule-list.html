@@ -1,39 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>All Shift Schedules</title>
+    <title>Shift Schedule List</title>
     <style>
-        body { font-family: Arial; padding: 30px; background: #f4f4f4; }
-        table { width: 100%; border-collapse: collapse; background-color: white; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #4CAF50; color: white; }
-        tr:hover { background-color: #f1f1f1; }
-        .top-link { margin-bottom: 20px; display: inline-block; }
-        .top-link a { text-decoration: none; background: #4CAF50; color: white; padding: 8px 12px; border-radius: 5px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px;
+            background: linear-gradient(to right, #eaf6ff, #f0f4f8);
+            margin: 0;
+        }
+
+        /* Top right link */
+        .top-right-link {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            color: #3a6073;
+        }
+
+        .top-right-link img {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+        }
+
+        .top-right-link:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 32px;
+            color: #3a6073;
+            border-bottom: 3px solid #6fb1fc;
+            display: inline-block;
+            margin: 0 auto 30px;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(111, 177, 252, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+            font-size: 15px;
+            color: #3a6073;
+        }
+
+        th {
+            background-color: #6fb1fc;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f2faff;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tr {
+                margin-bottom: 15px;
+                background: white;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                border-radius: 8px;
+                padding: 10px;
+            }
+
+            td {
+                padding: 10px;
+                text-align: right;
+                position: relative;
+            }
+
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                font-weight: bold;
+                color: #6fb1fc;
+                text-transform: uppercase;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2>All Assigned Shift Schedules</h2>
-    <div class="top-link">
-        <a href="/schedule-form">➕ Assign New Schedule</a>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Employee</th>
-                <th>Date</th>
-                <th>Planned Mode</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="s : ${schedules}">
-                <td th:text="${s.id}">1</td>
-                <td th:text="${s.employee.name}">John</td>
-                <td th:text="${s.date}">2025-07-20</td>
-                <td th:text="${s.plannedMode}">Remote</td>
-            </tr>
-        </tbody>
-    </table>
+
+<!-- Back to Dashboard link -->
+<a th:href="@{/dashboard}" class="top-right-link">
+    <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Home">
+    Back to Dashboard
+</a>
+
+<h2>Shift Schedule List</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Planned Mode</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="s : ${schedules}">
+            <td th:text="${s.id}" data-label="ID">1</td>
+            <td th:text="${s.employee.name}" data-label="Employee">John</td>
+            <td th:text="${s.date != null ? s.date.toString().split('-')[2] + '-' + s.date.toString().split('-')[1] + '-' + s.date.toString().split('-')[0] : ''}" data-label="Date">23-07-2025</td>
+            <td th:text="${s.plannedMode}" data-label="Planned Mode">Remote</td>
+        </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

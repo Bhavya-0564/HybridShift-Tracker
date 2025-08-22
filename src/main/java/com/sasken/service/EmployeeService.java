@@ -24,6 +24,11 @@ public class EmployeeService {
         return employeeRepository.findById(id);
     }
 
+    // Get employee by email ✅
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+
     // Add a new employee
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);

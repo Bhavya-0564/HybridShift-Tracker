@@ -6,4 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    
+    // ✅ Replace username with email
+    Employee findByEmail(String email);
+    
+    // Optional: check if email already exists
+    boolean existsByEmail(String email);
 }

@@ -1,6 +1,5 @@
 package com.sasken.controller;
 
-import com.sasken.model.Employee;
 import com.sasken.model.ShiftSchedule;
 import com.sasken.service.EmployeeService;
 import com.sasken.service.ShiftScheduleService;
@@ -8,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ShiftScheduleController {
@@ -18,23 +19,26 @@ public class ShiftScheduleController {
     @Autowired
     private EmployeeService employeeService;
 
-    // GET form for adding a new shift schedule
+    // Show form to add new schedule
     @GetMapping("/schedules/new")
     public String showScheduleForm(Model model) {
         model.addAttribute("schedule", new ShiftSchedule());
         model.addAttribute("employees", employeeService.getAllEmployees());
-        return "add-schedule";  // Thymeleaf template: add-schedule.html
+        return "schedule-form";  // make sure file is named schedule-form.html and in src/main/resources/templates
     }
 
-    // POST form submission to save a new schedule
+    // Save the schedule
     @PostMapping("/schedules")
-    public String saveSchedule(@RequestParam("employeeId") Long employeeId,
-                               @ModelAttribute("schedule") ShiftSchedule schedule) {
-        Employee employee = employeeService.getEmployeeById(employeeId)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID: " + employeeId));
-        
-        schedule.setEmployee(employee);
-        scheduleService.saveSchedule(schedule);
-        return "redirect:/calendar";
+    public String saveSchedule(@ModelAttribute("schedule") ShiftSchedule schedule) {
+        scheduleService.saveSchedule(schedule); // employee is set by Thymeleaf binding to employee.id
+        return "redirect:/calendar"; // or another page like /shift-schedule-list
+    }
+
+    // Show all schedules (optional)
+    @GetMapping("/shift-schedule-list")
+    public String showScheduleList(Model model) {
+        List<ShiftSchedule> schedules = scheduleService.getAllSchedules();
+        model.addAttribute("schedules", schedules);
+        return "schedule-list";  // make sure to create schedule-list.html
     }
 }

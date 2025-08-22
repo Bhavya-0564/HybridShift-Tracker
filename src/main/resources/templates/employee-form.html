@@ -7,12 +7,34 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 30px;
-            background: linear-gradient(to right, #eaf6ff, #f1f6fb); /* Soft Sky Blue + Cool Gray */
+            background: linear-gradient(to right, #eaf6ff, #f1f6fb);
+            position: relative;
         }
 
         h2 {
             color: #2b3d52;
             margin-bottom: 20px;
+        }
+
+        /* Clean top-right dashboard link */
+        .top-right-link {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            text-decoration: none;
+            color: #2b3d52;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-right-link i {
+            font-size: 16px;
+        }
+
+        .top-right-link:hover {
+            text-decoration: underline;
         }
 
         a {
@@ -80,23 +102,38 @@
             transform: scale(1.02);
         }
     </style>
+
+    <!-- Font Awesome for Home Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-    <h2>👤 Add New Employee</h2>
+    <!-- Back to Manager Dashboard link (top-right) -->
+    <a th:href="@{/manager/dashboard}" class="top-right-link">
+        <i class="fas fa-home"></i>
+        <span>Back to Manager Dashboard</span>
+    </a>
+
+    <h2>👤 Add / Edit Employee</h2>
     <a th:href="@{/employee-list}">📋 View All Employees</a>
 
-    <form th:action="@{/employees}" method="post">
+    <form th:action="@{/employees}" method="post" th:object="${employee}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <input type="hidden" th:field="*{id}" />
+
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" th:field="*{name}" required>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" th:field="*{email}" required>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" required>
 
         <label for="department">Department:</label>
-        <input type="text" id="department" name="department" required>
+        <input type="text" id="department" th:field="*{department}" required>
 
-        <input type="submit" value="Add Employee">
+        <input type="submit" value="Save Employee">
     </form>
 
 </body>

@@ -129,8 +129,20 @@
 
 <header>
     <div class="logo">🌐 HybridShift Tracker</div>
-    <div class="welcome"><i class="fas fa-user-circle"></i> Welcome, User</div>
+    <div class="welcome">
+        <i class="fas fa-user-circle"></i> 
+        <div style="display:flex; flex-direction:column; align-items:flex-start;">
+            <span>Welcome, <span th:text="${username}">User</span></span>
+            <form th:action="@{/logout}" method="post" style="margin:0; padding:0;">
+                <button type="submit" 
+                        style="background:none;border:none;color:#3a6073;font-weight:bold;cursor:pointer;">
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
 </header>
+
 
 <h1 class="dashboard-title">Dashboard</h1>
 
@@ -145,20 +157,22 @@
     </div>
 
     <div class="card">
-        <a th:href="@{/schedules/new}">
-            <i class="fas fa-calendar-alt"></i>
-            <h3>Shift Schedule Management</h3>
-            <p>Set and view team shift schedules.</p>
-        </a>
-    </div>
-
-    <div class="card">
-    <a th:href="@{/employees}">
-        <i class="fas fa-users"></i>
-        <h3>Employee Directory</h3>
-        <p>View and manage employee records.</p>
+    <a th:href="@{/shift-schedule-list}">
+        <i class="fas fa-calendar-alt"></i>
+        <h3>Shift Schedule List</h3>
+        <p>View all team shift schedules.</p>
     </a>
 </div>
+
+
+    <div class="card">
+    <a th:href="@{/employee/directory}">
+        <i class="fas fa-users"></i>
+        <h3>Employee Directory</h3>
+        <p>Browse employee contact and department info.</p>
+    </a>
+</div>
+
 
 
     <div class="card">

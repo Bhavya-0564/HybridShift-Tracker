@@ -5,18 +5,18 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #eaf6ff, #f0f4f8); /* Soft sky blue to light gray */
+            background: linear-gradient(to right, #eaf6ff, #f0f4f8);
             padding: 40px;
             margin: 0;
         }
 
         .form-container {
-            max-width: 400px;
+            max-width: 420px;
             margin: auto;
             background: #ffffff;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(111, 177, 252, 0.2); /* Soft blue shadow */
+            box-shadow: 0 10px 30px rgba(111, 177, 252, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -29,14 +29,13 @@
             text-align: center;
             font-size: 22px;
             font-weight: bold;
-            color: #3a6073; /* Cool gray-blue */
+            color: #3a6073;
             margin-bottom: 20px;
-            letter-spacing: 0.5px;
         }
 
         h2 {
             text-align: center;
-            background: linear-gradient(to right, #191d22, #b6c6d8); /* Soft sky blue + cool gray */
+            background: linear-gradient(to right, #191d22, #b6c6d8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: 28px;
@@ -59,14 +58,26 @@
             box-shadow: 0 0 5px rgba(111, 177, 252, 0.3);
         }
 
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+            color: #6fb1fc;
+        }
+
         button {
             background: linear-gradient(to right, #6fb1fc, #b6c6d8);
             color: white;
             border: none;
             font-weight: bold;
-            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
 
         button:hover {
@@ -100,11 +111,27 @@
     <div class="site-name">🌐 HybridShift Tracker Portal</div>
 
     <h2>Sign Up</h2>
+<div th:if="${error}" class="error" th:text="${error}"></div>
 
     <form th:action="@{/signup}" method="post" th:object="${user}">
-        <input type="text" th:field="*{username}" placeholder="Username" required />
-        <input type="password" th:field="*{password}" placeholder="Password" required />
-        <input type="text" th:field="*{role}" placeholder="Role (e.g., EMPLOYEE or MANAGER)" required />
+        <input type="text" th:field="*{fullName}" placeholder="Full Name" required />
+
+        <input type="text" th:field="*{username}" placeholder="Username" 
+               pattern="[a-zA-Z0-9._@]{4,}" 
+               title="Minimum 4 characters. Only letters, numbers, '.', '_', '@' allowed" required />
+
+        <div class="password-wrapper">
+            <input type="password" th:field="*{password}" id="password" placeholder="Password" required />
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
+        </div>
+
+        <input type="email" th:field="*{email}" placeholder="Email Address" required />
+
+        <input type="tel" th:field="*{phone}" placeholder="Phone Number" 
+               pattern="[0-9]{10}" 
+               title="Enter a valid 10-digit phone number" required />
+
+
         <button type="submit">Sign Up</button>
     </form>
 
@@ -112,5 +139,19 @@
         <p>Already have an account? <a th:href="@{/login}">Login</a></p>
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        const pwd = document.getElementById("password");
+        const icon = event.target;
+        if (pwd.type === "password") {
+            pwd.type = "text";
+            icon.textContent = "🙈";
+        } else {
+            pwd.type = "password";
+            icon.textContent = "👁️";
+        }
+    }
+</script>
 </body>
 </html>

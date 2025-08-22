@@ -16,6 +16,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     // Used to fetch attendance for today's dashboard
     List<Attendance> findByDate(LocalDate date);
-   
+   boolean existsByEmployeeAndDate(Employee employee, LocalDate date);
 
 }

@@ -2,6 +2,8 @@ package com.sasken.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +26,9 @@ public class WorkLog {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @Column(name = "login_time")
+private LocalTime loginTime;
 
     
 }
